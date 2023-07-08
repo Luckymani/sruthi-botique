@@ -14,3 +14,8 @@ code {
 	--bgltvilot: #a744e3;
 	--bgskyblue: #53b9f2;
 }
+
+a{
+	text-decoration: none;
+	color: black;
+}
