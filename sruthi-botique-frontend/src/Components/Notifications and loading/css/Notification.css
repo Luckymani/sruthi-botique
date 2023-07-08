@@ -1,0 +1,13 @@
+.notification-container {
+	background: red;
+	position: absolute;
+	top: 30px;
+	left: 50%;
+	transform: translate(-50%, 0%);
+}
+/* .success {
+}
+.error {
+}
+.warning {
+} */
