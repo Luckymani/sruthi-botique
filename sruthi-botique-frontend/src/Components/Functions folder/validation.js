@@ -7,7 +7,7 @@ export const validateUsername = (username) => {
 };
 
 export const validateEmail = (email) => {
-	const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 	if (!regex.test(email)) {
 		return false;
 	}

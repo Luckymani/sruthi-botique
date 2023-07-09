@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../css/loginStyles.css";
 import { validateUsername, validateEmail, validatePassword } from "../../Functions folder/validation";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from 'jwt-decode'
 
 function RegisterPage() {
 	const [registrationDeatils, setRegistrationDeatils] = useState({ username: "", email: "", password: "" });
@@ -22,6 +24,22 @@ function RegisterPage() {
 	}
 	console.log(registrationDeatils);
 	console.log(validation);
+
+	// google-singup-code
+	const responseMessage = (response) => {
+		const token = response.credential
+		const user = jwt_decode(token)
+		console.log(user)
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
+
+	const google_signup = document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe-BPrWId")[0]
+	if (google_signup !=undefined){
+		google_signup.textContent = "Sign up with Google"
+	}
+	
 	return (
 		<div id="wrapper">
 			{/* <div id="logo">
@@ -33,15 +51,16 @@ function RegisterPage() {
 					<p>Sign up</p>
 				</div>
 				<div>
-					<form method="" action="">
+					<form method="" action="" id="register_form">
 						<label htmlFor="username">Username</label>
 						<input type="text" id="username" name="username" autoComplete="off" placeholder="username" onChange={handleChange}></input>
-
+						{ !validation.usernameVal && registrationDeatils.username && <div class='error_msg'>Username must be atleast 6 characters long, and can contain letter, numbers, underscore.</div> }
 						<label htmlFor="email">E-mail</label>
-						<input type="text" id="email" name="email" placeholder="email" onChange={handleChange}></input>
-
+						<input type="text" id="email" name="email" placeholder="email" autoComplete="off" onChange={handleChange}></input>
+						{ !validation.emailVal && registrationDeatils.email && <div class='error_msg'>Ex: example123@gmail.com</div> }
 						<label htmlFor="password">Password</label>
 						<input type="text" id="password" name="password" placeholder="password" onChange={handleChange}></input>
+						{ !validation.passwordVal && registrationDeatils.password && <div class='error_msg'>Password must be atleast 8 characters long and must contain uppercase and special character.  </div> }
 					</form>
 				</div>
 				<div id="card_footer">
@@ -53,6 +72,9 @@ function RegisterPage() {
 							<b>Login</b>
 						</a>
 					</p>
+					<div className="google_login">
+						<GoogleLogin onSuccess={responseMessage} onError={errorMessage}/>
+					</div>			
 				</div>
 			</div>
 		</div>

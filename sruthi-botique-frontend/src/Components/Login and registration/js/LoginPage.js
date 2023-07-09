@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "../css/loginStyles.css";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from 'jwt-decode'
+
 
 function LoginPage() {
 	const [loginDeatils, setLoginDeatils] = useState({});
@@ -7,6 +10,17 @@ function LoginPage() {
 		setLoginDeatils({ ...loginDeatils, [e.target.name]: e.target.value });
 	}
 	console.log(loginDeatils);
+
+	// google-singup-code
+	const responseMessage = (response) => {
+        const token = response.credential
+		const user = jwt_decode(token)
+		console.log(user)
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
+
 	return (
 		<div id="wrapper">
 			{/* <div id="logo">
@@ -37,6 +51,9 @@ function LoginPage() {
 							<b>create account</b>
 						</a>
 					</p>
+					<div className="google_login">
+						<GoogleLogin onSuccess={responseMessage} onError={errorMessage}/>
+					</div>
 				</div>
 			</div>
 		</div>
