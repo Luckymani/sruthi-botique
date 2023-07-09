@@ -1,13 +1,40 @@
 .notification-container {
-	background: red;
+	background: #f0f0f0;
 	position: absolute;
-	top: 30px;
+	top: 25px;
 	left: 50%;
 	transform: translate(-50%, 0%);
+	padding: 5px 15px;
+	border-radius: 20px;
+	white-space: nowrap;
 }
-/* .success {
+.notification-container div {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.notification-container div .close-icon {
+	font-size: 25px;
+	fill: #f0f0f0;
+	/* color: white; */
+	border-radius: 50%;
+	cursor: pointer;
+}
+.success {
+	border: 2px solid rgb(0, 227, 0);
 }
 .error {
+	border: 2px solid rgb(161, 22, 22);
 }
 .warning {
-} */
+	border: 2px solid orange;
+}
+.success .close-icon {
+	background: rgb(23, 113, 23);
+}
+.error .close-icon {
+	background: rgb(161, 22, 22);
+}
+.warning .close-icon {
+	background: orange;
+}

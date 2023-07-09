@@ -1,12 +1,15 @@
 import React from "react";
 import "../css/Notification.css";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 function Notification(props) {
-	console.log(props.notificationDeatils);
 	const { notificationType, notificationMessage } = props.notificationDeatils;
 	return (
 		<div className={`${notificationType} notification-container`}>
-			<div>{notificationMessage}</div>
+			<div>
+				{notificationMessage}
+				<AiFillCloseCircle className="close-icon" onClick={() => props.setNotificationDeatils({ showNotificationDeatils: false })} />
+			</div>
 		</div>
 	);
 }

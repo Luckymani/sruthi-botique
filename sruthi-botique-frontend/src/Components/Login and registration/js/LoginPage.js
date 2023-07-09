@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/loginStyles.css";
 
 function LoginPage() {
+	const [loginDeatils, setLoginDeatils] = useState({});
+	function handleChange(e) {
+		setLoginDeatils({ ...loginDeatils, [e.target.name]: e.target.value });
+	}
+	console.log(loginDeatils);
 	return (
 		<div id="wrapper">
-			<div id="logo">
-				<img src=""></img>
-			</div>
+			{/* <div id="logo">
+				<img src="" alt="logo"></img>
+			</div> */}
 
 			<div id="card">
 				<div id="title">
@@ -14,10 +19,10 @@ function LoginPage() {
 				</div>
 				<div>
 					<form method="" action="">
-						<label for="username">Username</label>
-						<input type="text" id="username" name="username" autocomplete="off" placeholder="username"></input>
-						<label for="password">Password</label>
-						<input type="text" id="password" name="password" placeholder="password"></input>
+						<label htmlFor="username">E-mail</label>
+						<input type="text" id="email" name="email" autoComplete="off" placeholder="email" onChange={handleChange}></input>
+						<label htmlFor="password">Password</label>
+						<input type="text" id="password" name="password" placeholder="password" onChange={handleChange}></input>
 					</form>
 				</div>
 				<div id="card_footer">
@@ -27,7 +32,7 @@ function LoginPage() {
 					<button id="lgn_btn">Log in</button>
 					<p>
 						don’t have an account?{" "}
-						<a href="">
+						<a href="#">
 							{" "}
 							<b>create account</b>
 						</a>
