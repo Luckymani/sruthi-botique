@@ -63,22 +63,21 @@ label {
 	align-items: center;
 }
 
-.error_msg{
+.error_msg {
 	align-self: flex-start;
 	margin-bottom: 15px;
 	margin-left: 5px;
-	color:rgb(161,22,22);
-	width:20rem;
+	color: rgb(161, 22, 22);
+	width: 20rem;
 	text-align: left;
-	font-size: .8rem;
+	font-size: 0.8rem;
 }
 
-#register_form input{
+#register_form input {
 	margin-bottom: 10px;
 }
 
-.google_login{
-	width:11.rem;
+.google_login {
+	width: 11rem;
 	margin-top: 15px;
-
 }
