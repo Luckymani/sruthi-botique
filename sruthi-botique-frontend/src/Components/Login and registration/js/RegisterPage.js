@@ -75,9 +75,7 @@ function RegisterPage() {
 						</a>
 					</p>
 					<div className="google_login">
-						<GoogleLogin onSuccess={responseMessage} onError={errorMessage}>
-							sign up with google
-						</GoogleLogin>
+						<GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
 					</div>
 				</div>
 			</div>
