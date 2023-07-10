@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import "../css/loginStyles.css";
 import { validateUsername, validateEmail, validatePassword } from "../../Functions folder/validation";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
+import { useGoogleLogin } from "@react-oauth/google";
+import useLoginWithGoogle from "../../Functions folder/useLoginWithGoogle";
 
 function RegisterPage() {
 	const [registrationDeatils, setRegistrationDeatils] = useState({ username: "", email: "", password: "" });
 	const [validation, setValidation] = useState({ usernameVal: true, emailVal: true, passwordVal: true });
 	const [user, setuser] = useState();
+	const { profileData, onSuccess, onError } = useLoginWithGoogle();
 
+	//?to handle google authentication
+	const login = useGoogleLogin({ onSuccess, onError });
+
+	//?handle input change
 	function handleChange(e) {
 		setRegistrationDeatils({ ...registrationDeatils, [e.target.name]: e.target.value });
 
@@ -22,24 +27,6 @@ function RegisterPage() {
 			default:
 				return null;
 		}
-	}
-	console.log(registrationDeatils);
-	console.log(validation);
-
-	// google-singup-code
-	const responseMessage = (response) => {
-		const token = response.credential;
-		setuser(jwt_decode(token));
-
-		console.log(user);
-	};
-	const errorMessage = (error) => {
-		console.log(error);
-	};
-
-	const google_signup = document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe-BPrWId")[0];
-	if (google_signup != undefined) {
-		google_signup.textContent = "Sign up with Google";
 	}
 
 	return (
@@ -75,9 +62,7 @@ function RegisterPage() {
 						</a>
 					</p>
 					<div className="google_login">
-						<GoogleLogin onSuccess={responseMessage} onError={errorMessage}>
-							sign up with google
-						</GoogleLogin>
+						<button onClick={() => login()}>sign up with google</button>
 					</div>
 				</div>
 			</div>

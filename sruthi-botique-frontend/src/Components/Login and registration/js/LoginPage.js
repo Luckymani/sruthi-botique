@@ -1,24 +1,21 @@
 import React, { useState } from "react";
 import "../css/loginStyles.css";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
+
+import useLoginWithGoogle from "../../Functions folder/useLoginWithGoogle";
+import { useGoogleLogin } from "@react-oauth/google";
 
 function LoginPage() {
 	const [loginDeatils, setLoginDeatils] = useState({});
+	const { profileData, onSuccess, onError } = useLoginWithGoogle();
+
+	//?to handle google authentication
+	const login = useGoogleLogin({ onSuccess, onError });
+	console.log(profileData);
+
+	//?handle input change
 	function handleChange(e) {
 		setLoginDeatils({ ...loginDeatils, [e.target.name]: e.target.value });
 	}
-	console.log(loginDeatils);
-
-	// google-singup-code
-	const responseMessage = (response) => {
-		const token = response.credential;
-		const user = jwt_decode(token);
-		console.log(user);
-	};
-	const errorMessage = (error) => {
-		console.log(error);
-	};
 
 	return (
 		<div id="wrapper">
@@ -51,9 +48,7 @@ function LoginPage() {
 						</a>
 					</p>
 					<div className="google_login">
-						<GoogleLogin onSuccess={responseMessage} onError={errorMessage}>
-							sign in with google
-						</GoogleLogin>
+						<button onClick={() => login()}>sign in with google</button>
 					</div>
 				</div>
 			</div>
