@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import "../css/loginStyles.css";
 import { validateUsername, validateEmail, validatePassword } from "../../Functions folder/validation";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
+import { useGoogleLogin } from "@react-oauth/google";
+import useLoginWithGoogle from "../../Functions folder/useLoginWithGoogle";
+import axios from "axios";
 
 function RegisterPage() {
 	const [registrationDeatils, setRegistrationDeatils] = useState({ username: "", email: "", password: "" });
-	const [validation, setValidation] = useState({ usernameVal: true, emailVal: true, passwordVal: true });
+	const [validation, setValidation] = useState({ usernameVal: false, emailVal: false, passwordVal: false });
 	const [user, setuser] = useState();
+	const { profileData, onSuccess, onError } = useLoginWithGoogle();
 
+	//?to handle google authentication
+	const login = useGoogleLogin({ onSuccess, onError });
+
+	//?handle input change
 	function handleChange(e) {
 		setRegistrationDeatils({ ...registrationDeatils, [e.target.name]: e.target.value });
 
@@ -23,24 +29,18 @@ function RegisterPage() {
 				return null;
 		}
 	}
-	console.log(registrationDeatils);
-	console.log(validation);
 
-	// google-singup-code
-	const responseMessage = (response) => {
-		const token = response.credential;
-		setuser(jwt_decode(token));
-
-		console.log(user);
-	};
-	const errorMessage = (error) => {
-		console.log(error);
-	};
-
-	const google_signup = document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe-BPrWId")[0];
-	if (google_signup != undefined) {
-		google_signup.textContent = "Sign up with Google";
+	// working on it
+	const signupHandler = async ()=>{
+		try {
+			(validation.emailVal && validation.usernameVal && validation.passwordVal) && await axios.post('http://localhost:5000/user/registration',registrationDeatils); 
+			
+		} catch (error) {
+		console.error(error);
+		}
 	}
+	const signupbtn = document.getElementById('lgn_btn')
+	signupbtn && signupbtn.addEventListener('click',signupHandler)
 
 	return (
 		<div id="wrapper">
@@ -69,13 +69,13 @@ function RegisterPage() {
 					<button id="lgn_btn">Create Account</button>
 					<p>
 						already have an account?{" "}
-						<a href="#">
+						<a href="/login">
 							{" "}
 							<b>Login</b>
 						</a>
 					</p>
 					<div className="google_login">
-						<GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+						<button onClick={() => login()}>sign up with google</button>
 					</div>
 				</div>
 			</div>

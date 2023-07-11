@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 import "../css/loginStyles.css";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
+
+import useLoginWithGoogle from "../../Functions folder/useLoginWithGoogle";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 function LoginPage() {
 	const [loginDeatils, setLoginDeatils] = useState({});
+	const { profileData, onSuccess, onError } = useLoginWithGoogle();
+
+	//?to handle google authentication
+	const login = useGoogleLogin({ onSuccess, onError });
+	console.log(profileData);
+
+	//?handle input change
 	function handleChange(e) {
 		setLoginDeatils({ ...loginDeatils, [e.target.name]: e.target.value });
 	}
-	console.log(loginDeatils);
 
-	// google-singup-code
-	const responseMessage = (response) => {
-		const token = response.credential;
-		const user = jwt_decode(token);
-		console.log(user);
-	};
-	const errorMessage = (error) => {
-		console.log(error);
-	};
+	
+
+	// working on it
+	const loginHandler = async ()=>{
+		try{
+			//! problem with login details
+			await axios.post('http://localhost:5000/user/login',loginDeatils)
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+	const loginbtn = document.getElementById('lgn_btn')
+	loginbtn && loginbtn.addEventListener('click',loginHandler)
+	
 
 	return (
 		<div id="wrapper">
@@ -31,7 +45,7 @@ function LoginPage() {
 					<p>Sign in</p>
 				</div>
 				<div>
-					<form method="" action="">
+					<form method="" action="" id="login_form">
 						<label htmlFor="username">E-mail</label>
 						<input type="text" id="email" name="email" autoComplete="off" placeholder="email" onChange={handleChange}></input>
 						<label htmlFor="password">Password</label>
@@ -45,15 +59,13 @@ function LoginPage() {
 					<button id="lgn_btn">Log in</button>
 					<p>
 						don’t have an account?{" "}
-						<a href="#">
+						<a href="/register">  
 							{" "}
 							<b>create account</b>
 						</a>
 					</p>
 					<div className="google_login">
-						<GoogleLogin onSuccess={responseMessage} onError={errorMessage}>
-							sign in with google
-						</GoogleLogin>
+						<button onClick={() => login()}>sign in with google</button>
 					</div>
 				</div>
 			</div>
