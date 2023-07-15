@@ -15,7 +15,7 @@ function App() {
 		if (!notificationDeatils.showNotification) return;
 		const timeOut = setTimeout(() => {
 			setNotificationDeatils({ notificationDeatils: false });
-		}, 1000);
+		}, 2000);
 		return () => {
 			clearTimeout(timeOut, 1000);
 		};

@@ -1,38 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../css/loginStyles.css";
 
 import useLoginWithGoogle from "../../Functions folder/useLoginWithGoogle";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
+import { NotificationContext } from "../../../App";
+
 function LoginPage() {
-	const [loginDeatils, setLoginDeatils] = useState({});
+	const [loginDeatils, setLoginDeatils] = useState({ email: "", password: "" });
 	const { profileData, onSuccess, onError } = useLoginWithGoogle();
+
+	//?contexts here
+	const { notificationDeatils, setNotificationDeatils } = useContext(NotificationContext);
 
 	//?to handle google authentication
 	const login = useGoogleLogin({ onSuccess, onError });
-	console.log(profileData);
 
 	//?handle input change
 	function handleChange(e) {
 		setLoginDeatils({ ...loginDeatils, [e.target.name]: e.target.value });
 	}
 
-	
-
 	// working on it
-	const loginHandler = async ()=>{
-		try{
-			//! problem with login details
-			await axios.post('http://localhost:5000/user/login',loginDeatils)
+	const loginHandler = async () => {
+		const { email, password } = loginDeatils;
+		if (email == "" && password == "") {
+			setNotificationDeatils({ showNotification: true, notificationType: "warning", notificationMessage: "fill the deatils" });
+			return;
 		}
-		catch(error){
-			console.log(error)
+
+		try {
+			await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, loginDeatils);
+		} catch (error) {
+			console.log(error);
 		}
-	}
-	const loginbtn = document.getElementById('lgn_btn')
-	loginbtn && loginbtn.addEventListener('click',loginHandler)
-	
+	};
 
 	return (
 		<div id="wrapper">
@@ -46,20 +49,22 @@ function LoginPage() {
 				</div>
 				<div>
 					<form method="" action="" id="login_form">
-						<label htmlFor="username">E-mail</label>
-						<input type="text" id="email" name="email" autoComplete="off" placeholder="email" onChange={handleChange}></input>
+						<label htmlFor="email">E-mail</label>
+						<input type="text" id="email" name="email" autoComplete="off" placeholder="email" onChange={handleChange} required></input>
 						<label htmlFor="password">Password</label>
-						<input type="text" id="password" name="password" placeholder="password" onChange={handleChange}></input>
+						<input type="text" id="password" name="password" placeholder="password" onChange={handleChange} required></input>
 					</form>
 				</div>
 				<div id="card_footer">
 					<p>
 						<a href="">forgot password?</a>
 					</p>
-					<button id="lgn_btn">Log in</button>
+					<button id="lgn_btn" onClick={() => loginHandler()}>
+						Log in
+					</button>
 					<p>
 						don’t have an account?{" "}
-						<a href="/register">  
+						<a href="/register">
 							{" "}
 							<b>create account</b>
 						</a>
