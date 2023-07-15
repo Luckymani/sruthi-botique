@@ -3,7 +3,6 @@ const Temp__data = require('../models/tempdata')
 module.exports.createAccount = function(req,res){
     const {username,email,password} = req.body
 
-    Temp__data.findOne()
 
     Temp__data.findOne({email:email},(err,user)=>{
         if(err){
