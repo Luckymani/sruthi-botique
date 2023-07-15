@@ -8,6 +8,6 @@ const tempDataSchema  = new mongoose.Schema({
 }
 )
 
-const TempData = mongoose.model('Temp_Data',tempDataSchema)
+const TempData = mongoose.model('tempdata',tempDataSchema)
 
 module.exports = TempData;
