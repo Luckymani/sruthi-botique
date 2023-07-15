@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 const userDataSchema  = new mongoose.Schema({
-   username:{type:String},
-   email:{String},
-   password:{String},
-   OTP:{Number},
-   googleAuth:{Boolean},
-   PhoneNo:{Number}
+   username:String,
+   email:String,
+   password:String,
+   OTP:Number,
+   googleAuth:Boolean,
+   PhoneNo:Number
 },
 {
     timestamps:true
