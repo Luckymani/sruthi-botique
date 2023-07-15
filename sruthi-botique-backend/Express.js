@@ -10,16 +10,13 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
+app.use('/',require('./routes/index.js'))
 
-app.post('/user/registration',(req,res)=>{
-    console.log(req.body)
-}
-)
 
-app.post('/user/login',(req,res)=>{
-    console.log(req.body)
-}
-)
+// app.post('/user/login',(req,res)=>{
+//     console.log(req.body)
+// }
+// )
 
 app.listen(port,(err)=>{
     console.log("succesfully running on port:",port)
