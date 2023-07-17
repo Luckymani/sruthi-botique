@@ -48,7 +48,7 @@ function LoginPage() {
 					<p>Sign in</p>
 				</div>
 				<div>
-					<form method="" action="" id="login_form">
+					<form id="login_form">
 						<label htmlFor="email">E-mail</label>
 						<input type="text" id="email" name="email" autoComplete="off" placeholder="email" onChange={handleChange} required></input>
 						<label htmlFor="password">Password</label>

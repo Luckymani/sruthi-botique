@@ -1,18 +1,18 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
-const port = process.env.PORT;
 const bodyParser = require("body-parser");
-const db = require("./configurations/mongoose");
 const cors = require("cors");
 const app = express();
+const db = require("./configurations/mongoose");
+const mongoose = require("mongoose");
+const port = require("dotenv").config();
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/user", require("./routes/login.js"));
-app.post("/user", require("./routes/register.js"));
+app.use("/user", require("./routes/login.js"));
+app.use("/user", require("./routes/register.js"));
 
-app.listen(port, (err) => {
-	console.log("succesfully running on port:", port);
+app.listen(process.env.PORT, (err) => {
+	console.log("succesfully running on port:", process.env.PORT);
 });
