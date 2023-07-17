@@ -31,16 +31,16 @@ function RegisterPage() {
 	}
 
 	// working on it
-	const signupHandler = async ()=>{
+	function signupHandler(){
 		try {
-			(validation.emailVal && validation.usernameVal && validation.passwordVal) && await axios.post('http://localhost:5000/user/registration',registrationDeatils); 
+			(validation.emailVal && validation.usernameVal && validation.passwordVal) &&  axios.post('http://localhost:5000/user/register',registrationDeatils); 
 			
 		} catch (error) {
 		console.error(error);
 		}
 	}
-	const signupbtn = document.getElementById('lgn_btn')
-	signupbtn && signupbtn.addEventListener('click',signupHandler)
+	// const signupbtn = document.getElementById('lgn_btn')
+	// signupbtn && signupbtn.addEventListener('click',signupHandler)
 
 	return (
 		<div id="wrapper">
@@ -53,20 +53,20 @@ function RegisterPage() {
 					<p>Sign up</p>
 				</div>
 				<div>
-					<form method="" action="" id="register_form">
+					<form id="register_form">
 						<label htmlFor="username">Username</label>
 						<input type="text" id="username" name="username" autoComplete="off" placeholder="username" onChange={handleChange}></input>
-						{!validation.usernameVal && registrationDeatils.username && <div class="error_msg">Username must be atleast 6 characters long, and can contain letter, numbers, underscore.</div>}
+						{!validation.usernameVal && registrationDeatils.username && <div className="error_msg">Username must be atleast 6 characters long, and can contain letter, numbers, underscore.</div>}
 						<label htmlFor="email">E-mail</label>
 						<input type="text" id="email" name="email" placeholder="email" autoComplete="off" onChange={handleChange}></input>
-						{!validation.emailVal && registrationDeatils.email && <div class="error_msg">Invalid email</div>}
+						{!validation.emailVal && registrationDeatils.email && <div className="error_msg">Invalid email</div>}
 						<label htmlFor="password">Password</label>
 						<input type="text" id="password" name="password" placeholder="password" onChange={handleChange}></input>
-						{!validation.passwordVal && registrationDeatils.password && <div class="error_msg">Password must be atleast 8 characters long and must contain atleast one uppercase and special character and one number. </div>}
+						{!validation.passwordVal && registrationDeatils.password && <div className="error_msg">Password must be atleast 8 characters long and must contain atleast one uppercase and special character and one number. </div>}
 					</form>
 				</div>
 				<div id="card_footer">
-					<button id="lgn_btn">Create Account</button>
+					<button id="lgn_btn" onClick={()=>{signupHandler()}}>Create Account</button>
 					<p>
 						already have an account?{" "}
 						<a href="/login">

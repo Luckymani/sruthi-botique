@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const tempdata = require("../models/tempdata");
 
-router.post("/register", async (req, res) => {
+router.post("/", async (req, res) => {
 	const { username, email, password } = req.body;
 
 	const user = await tempdata.findOne({ email: email });
