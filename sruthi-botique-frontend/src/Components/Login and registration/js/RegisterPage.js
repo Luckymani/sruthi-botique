@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useState,useContext} from "react";
 import "../css/loginStyles.css";
+import { useNavigate } from "react-router-dom";
 import { validateUsername, validateEmail, validatePassword } from "../../Functions folder/validation";
 import { useGoogleLogin } from "@react-oauth/google";
 import useLoginWithGoogle from "../../Functions folder/useLoginWithGoogle";
 import axios from "axios";
 
+
+import {NotificationContext} from '../../../App'
+
 function RegisterPage() {
 	const [registrationDeatils, setRegistrationDeatils] = useState({ username: "", email: "", password: "" });
 	const [validation, setValidation] = useState({ usernameVal: false, emailVal: false, passwordVal: false });
 	const [user, setuser] = useState();
+
+	const { notificationDeatils, setNotificationDeatils } = useContext(NotificationContext);
+
+	const navigate = useNavigate()
+
 	const { profileData, onSuccess, onError } = useLoginWithGoogle();
 
 	//?to handle google authentication
 	const login = useGoogleLogin({ onSuccess, onError });
+
 
 	//?handle input change
 	function handleChange(e) {
@@ -33,7 +43,14 @@ function RegisterPage() {
 	// working on it
 	function signupHandler(){
 		try {
-			(validation.emailVal && validation.usernameVal && validation.passwordVal) &&  axios.post('http://localhost:5000/user/register',registrationDeatils); 
+			(validation.emailVal && validation.usernameVal && validation.passwordVal) &&  axios.post('http://localhost:5000/user/register',registrationDeatils)
+			.then(res=>{ 
+				setNotificationDeatils({showNotification:true,notificationType:res.data.type,notificationMessage:res.data.message})
+				if(res.status===203){
+					navigate('/login')
+				}
+			})
+			.catch(err=>{console.log(err)}); 
 			
 		} catch (error) {
 		console.error(error);

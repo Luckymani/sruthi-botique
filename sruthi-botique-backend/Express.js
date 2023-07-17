@@ -10,7 +10,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use("/user", require("./routes/login.js"));
+app.use("/user/login", require("./routes/login.js"));
 app.use("/user/register", require("./routes/register.js"));
 
 app.listen(process.env.PORT, (err) => {
